@@ -1,5 +1,3 @@
-# Nova-AI-Voice-Assistant
-
 # Nova - AI Voice Assistant
 
 Nova is an AI Voice Assistant that can respond to voice commands. 
