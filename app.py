@@ -5,7 +5,7 @@ import musiclibrary
 import datetime
 from openai import OpenAI
 from gtts import gTTS
-import pygame
+import pygame.display
 import os
 import subprocess
 import threading
@@ -80,28 +80,12 @@ def deepseek_chat(command):
 def processcommand(c):
     c = c.lower()
     global text_output  # Ensure text_output is accessible
-
-    if 'open google' in c:
-        webbrowser.open('https://google.com')
-        speak(f'opening google')
-        text_output.insert(tk.END, f"Nova: Opening Google\n")
-        text_output.update_idletasks()  # Force UI update
-    elif 'open youtube' in c:
-        webbrowser.open('https://youtube.com')
-        speak("Opening YouTube")
-        text_output.insert(tk.END, f"Nova: Opening Youtube\n")
-        text_output.update_idletasks()
-    elif 'open facebook' in c:
-        webbrowser.open('https://facebook.com')
-        speak("Opening Facebook")
-        text_output.insert(tk.END, f"Nova: Opening Facebook\n")
-        text_output.update_idletasks()
-    elif 'open linkedin' in c:
-        webbrowser.open('https://linkedin.com')
-        speak("Opening LinkedIn")
-        text_output.insert(tk.END, f"Nova: Opening Linkedin\n")
-        text_output.update_idletasks()
-
+    #open any website
+    if c.startswith("open"):
+        web = c.split(" ")[1]
+        webbrowser.open(f'https://{web}.com')
+        speak(f"opening {web}")
+        window.after(0, lambda: text_output.insert(tk.END, f"Nova: opening {web}\n"))
     # Play music from the library
     elif c.startswith("play"):
         song = c.split(" ")[1]
@@ -142,26 +126,20 @@ def processcommand(c):
         today = datetime.datetime.now().strftime("%B %d, %Y")
         window.after(0, lambda: text_output.insert(tk.END, f"Nova: Today's date is {today}\n"))
         speak(f"Today's date is {today}")
-
-    # Stop listening command
-    elif "stop listening" in c or "power off" in c or 'stop' in c:
-        speak("Okay, I will stop listening. Goodbye!")
-        window.after(0, lambda: text_output.insert(tk.END, "Nova: Okay, I will stop listening. Goodbye!\n"))
-        return False  # This will stop the listening loop
-    #opeing local files or apps 😍
-    elif "open notepad" in c or 'notepad' in c:
+    #opeing local files or apps 
+    elif 'notepad' in c:
         os.startfile("notepad.exe")
         window.after(0, lambda: text_output.insert(tk.END, "opening notpad\n"))
         speak('opening notepad')
-    elif "open calculator" in c or 'notepad' in c:
+    elif'calculator' in c:
         os.startfile("calc.exe")
         window.after(0, lambda: text_output.insert(tk.END, "opening calculator\n"))
         speak('opening calculator')
-    elif 'open vs code' in c or 'vs code' in c:
+    elif'vs code' in c:
         os.startfile(r"F:\Microsoft VS Code\Code.exe")
         window.after(0, lambda: text_output.insert(tk.END, "opening vs code\n"))
         speak('opening vs code')
-    elif 'open cursor' in c or 'cursor' in c:
+    elif 'cursor' in c:
         os.startfile(r"C:\Users\COmputer\AppData\Local\Programs\cursor\Cursor.exee")
         window.after(0, lambda: text_output.insert(tk.END, "opening cursor\n"))
         speak('opening cursor')
@@ -169,37 +147,40 @@ def processcommand(c):
         subprocess.run(["cmd", "/c", "start whatsapp:"])
         window.after(0, lambda: text_output.insert(tk.END, "opening whatsapp\n"))
         speak('opening whatsapp')
-    elif 'open chrome' in c or 'chrome' in c:
+    elif 'chrome' in c or 'google' in c:
         os.startfile(r"C:\Program Files\Google\Chrome\Application\chrome.exe")
         window.after(0, lambda: text_output.insert(tk.END, "opening chrome \n"))
         speak('opening chrome')
-    elif 'open pieces' in c or 'pieces' in c:
+    elif 'pieces' in c:
         os.startfile(r"F:\Pieces for Developers\pieces_for_x.exe")
         window.after(0, lambda: text_output.insert(tk.END, "opening pieces \n"))
         speak('opening pieces')
-    elif 'open microsoft edge' in c or 'microsoft edge' in c:
+    elif 'microsoft edge' in c:
         os.startfile(r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe")
         window.after(0, lambda: text_output.insert(tk.END, "opening microsoft edge \n"))
         speak('opening microsoft edge')
-    elif 'open downloads' in c or 'downloads' in c:
+    elif 'downloads' in c:
         os.startfile(r"C:\Users\COmputer\Downloads")
         window.after(0, lambda: text_output.insert(tk.END, "opening downloads \n"))
         speak('opening download')
-    elif 'open desktop' in c or 'desktop' in c:
+    elif 'desktop' in c:
         os.startfile(r"C:\Users\COmputer\Desktop")
         window.after(0, lambda: text_output.insert(tk.END, "opening desktop \n"))
         speak('opening desktop')
-        
-
-        
+     # Stop listening command
+    elif "stop listening" in c or "power off" in c or 'stop' in c:
+        window.after(0, lambda: text_output.insert(tk.END, "Nova: Okay, I will stop listening. Goodbye!\n"))
+        speak("Okay, I will stop listening. Goodbye!")
+        button.config(state=tk.NORMAL) 
+        text_output.insert(tk.END, "Nova has stopped. Press 'Start Listening' to restart.\n")
+        return False  # This will stop the listening loop   
     # General AI chat response
     else:
         output = deepseek_chat(c)
         print(output)
         window.after(0, lambda: text_output.insert(tk.END, f"Nova: {output}\n"))
         speak(output)
-
-    return True  # Keep listening
+    return True
  # Keep listening
 
 # Continuous Listening Mode
@@ -214,7 +195,7 @@ def listen_continuously():
                 print("Listening...")
                 text_output.insert(tk.END, f"Nova: Listening\n")
                 text_output.update_idletasks()
-                audio = recognizer.listen(source)
+                audio = recognizer.listen(source , timeout=2)
 
             command = recognizer.recognize_google(audio)
             print(f"You said: {command}")
@@ -228,14 +209,15 @@ def listen_continuously():
             print(f"Error: {e}")
 
 # Flag to stop wake word listener after detection
-wake_word_detected = False
 
 def mainfunc():
     global wake_word_detected
+    wake_word_detected = False
+    button.config(state=tk.DISABLED) 
     text_output.insert(tk.END, f"Initializing Nova \n")
     text_output.update_idletasks()  
     speak("Initializing Nova")
-
+    
     def wake_word_listener():
         global wake_word_detected
         while not wake_word_detected:  # Run only if wake word not detected
@@ -295,7 +277,7 @@ scrollbar.config(command=text_output.yview)  # Link scrollbar to text output
 
 
 button = tk.Button(
-    master=window, text='Start Listening',command=mainfunc, 
+    master=window, text='Start',command=mainfunc, 
     padx=10,  # Increase horizontal padding
     pady=10,  # Increase vertical padding
     width=15,  # Set a fixed width

@@ -11,7 +11,8 @@ music = {
     'cassandra' : 'https://www.youtube.com/watch?v=x1ZtIVuHph0', 
     'glory' : 'https://www.youtube.com/watch?v=YVzLizz3k78', 
     'trump' : 'https://www.youtube.com/watch?v=nSstUsPpRUk', 
-    'aura' : 'https://www.youtube.com/watch?v=CgXFHAEVJtA'
+    'aura' : 'https://www.youtube.com/watch?v=CgXFHAEVJtA',
+    'udariyan' : 'https://www.youtube.com/watch?v=9udS0mpi1L4'
 }
 # print(music)
 # c = 'play popular'
