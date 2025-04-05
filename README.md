@@ -6,7 +6,7 @@ Nova is an AI Voice Assistant that can respond to voice commands.
 - Wake word detection [Nova]
 - Speech-to-text conversion
 - Perform basic commands
-- answer questining
+- Answer question
 - Open applications
 - search on command
 - play musics on voice command 
