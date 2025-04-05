@@ -3,10 +3,10 @@
 Nova is a Python-based AI voice assistant that activates with your voice and can perform various tasks like opening apps, searching online, playing music, and even answering questions using an integrated AI chat model.
 
 ---
-##Download .exe file for your desktop
-###This should only works for windows
+## Download .exe file for your desktop
+### This should only works for windows
 
-###download here("https://nextgencodde.github.io/Nova_download/')
+### Download here("https://nextgencodde.github.io/Nova_download/')
 
 ---
 ## 🌟 Features
