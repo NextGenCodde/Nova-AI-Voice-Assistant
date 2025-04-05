@@ -1,27 +1,48 @@
-# Nova - AI Voice Assistant
+# 🤖 Nova - AI Voice Assistant
 
-Nova is an AI Voice Assistant that can respond to voice commands. 
+Nova is a Python-based AI voice assistant that activates with your voice and can perform various tasks like opening apps, searching online, playing music, and even answering questions using an integrated AI chat model.
 
-## Features
-- Wake word detection [Nova]
-- Speech-to-text conversion
-- Perform basic commands
-- Answer question
-- Open applications
-- search on command
-- play musics on voice command 
-- open local desktop applications and files
+---
 
-## Installation
-- Clone the repo: `git clone https://github.com/your-username/Nova-AI-Voice-Assistant.git`
-- Install dependencies: `pip install -r requirements.txt`
-- Run the assistant: `python app.py`
+## 🌟 Features
 
-## Dependencies
-- `speech_recognition`
-- `pyttsx3`
-- `gTTS`
-- etc.
+- 🗣️ **Voice Activation:** Just say "Nova" to activate
+- 🌐 **Open Websites & Apps:** Open any website or local application via voice command
+- 🎵 **Play Music:** Play songs available in your music library
+- 📆 **Date & Time:** Ask for the current date and time
+- ☁️ **Weather Info:** Get weather updates of any city
+- 🔍 **Search Anything:** Google or YouTube search using your voice
+- 💬 **AI Chat Integration:** Uses DeepSeek Chat API for GPT-like responses
+- 🛑 **Stop Listening:** Say "stop" or "stop listening" to deactivate Nova
 
-## License
-This project is open-source and available under the MIT License.
+---
+
+## 🖥️ GUI
+
+Built using **Tkinter**, Nova provides a minimal and clean graphical interface.
+
+---
+
+## 🚀 How to Run the `.exe` (No Python Required!)
+
+Download `Nova.exe` from the `dist` folder (or GitHub Releases), then:
+
+1. Double-click the `.exe` file
+2. Wait a few seconds for it to initialize
+3. Say **"Nova"** to begin interacting
+
+> 📝 Note: Make sure your microphone is enabled and working properly!
+
+---
+
+## 📦 Built With
+
+- **Python 3.11**
+- **Tkinter**
+- **Pyttsx3**
+- **SpeechRecognition**
+- **DeepSeek API**
+- **PyInstaller** (for converting to .exe)
+
+---
+
