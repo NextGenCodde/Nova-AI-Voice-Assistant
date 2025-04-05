@@ -14,8 +14,3 @@ music = {
     'aura' : 'https://www.youtube.com/watch?v=CgXFHAEVJtA',
     'udariyan' : 'https://www.youtube.com/watch?v=9udS0mpi1L4'
 }
-# print(music)
-# c = 'play popular'
-# song = c.lower().split(" ")[1]
-# print(song , type(song))
-# print(music['popular'])
