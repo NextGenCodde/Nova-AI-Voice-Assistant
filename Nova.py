@@ -9,6 +9,10 @@ import pygame.display
 import os
 import subprocess
 import threading
+
+# from elevenlabs import ElevenLabs, Voice, VoiceSettings, play
+from elevenlabs.client import ElevenLabs
+from elevenlabs import stream
 #for ui 
 import tkinter as tk
 import ttkbootstrap as ttk
@@ -23,20 +27,55 @@ engine = pyttsx3.init()
 #     engine.runAndWait()
 
 #google text
+
+
+client = ElevenLabs(
+  api_key='sk_20b1a5899d669aed061c48e8242efd55f43abf2445bfd0f3',
+)
+
+
+
 def speak(text):
-    temp_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'temp.mp3')
-    tts = gTTS(text)
-    tts.save(temp_file)
-    # Rest of your function remains the same
+    
+    audio_stream = client.text_to_speech.convert_as_stream(
+    text=text,
+    voice_id="2EiwWnXFnvU5JabPnv8n",
+    model_id="eleven_multilingual_v2"
+)
+# Save stream to file
+    with open("output.mp3", "wb") as f:
+        for chunk in audio_stream:
+            f.write(chunk)
+
+    # Play audio using pygame
     pygame.mixer.init()
-    pygame.mixer.music.load(temp_file)
+    pygame.mixer.music.load("output.mp3")
     pygame.mixer.music.play()
 
     while pygame.mixer.music.get_busy():
-      pygame.time.Clock().tick(10)
-      
+     pygame.time.Clock().tick(10)
+    
     pygame.mixer.music.unload()
-    os.remove(temp_file)
+    os.remove('output.mp3')
+     
+
+
+
+
+# def speak_old(text):
+#     temp_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'temp.mp3')
+#     tts = gTTS(text)
+#     tts.save(temp_file)
+#     # Rest of your function remains the same
+#     pygame.mixer.init()
+#     pygame.mixer.music.load(temp_file)
+#     pygame.mixer.music.play()
+
+#     while pygame.mixer.music.get_busy():
+#       pygame.time.Clock().tick(10)
+      
+#     pygame.mixer.music.unload()
+#     os.remove(temp_file)
 # OpenAI DeepSeek Chat Function
 # Store chat history globally
 conversation_history = [
